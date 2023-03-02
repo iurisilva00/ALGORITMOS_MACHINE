@@ -1,0 +1,52 @@
+#Aprendizado Baseado em Instâncias
+
+
+
+
+
+from sklearn.neighbors import KNeighborsClassifier
+#Paradigmas de aprendizagem
+#KNN - vizinho mais próximo
+#Distancia euclidiana, quanto menor a distancia mais perto os registros estão
+#Sistema de recomendação, filtragem colaboratica
+#variaveis na mesma escala
+#Padronização mais usado, x-media/desvio padrão
+#Gerakemnte poderioso, outliers podem prejudizar, k grande classicar com overfiting, lento para previsões, se houver caracteristicas complexas é bom
+
+with open ('credit.pkl', 'rb') as f:
+  X_credit_treinamento,y_credit_treinamento, X_credit_teste, y_credit_teste = pickle.load(f)
+
+X_credit_treinamento.shape
+
+
+knn_credit = KNeighborsClassifier(n_neighbors=5, metric='minkowski', p =2)
+knn_credit.fit(X_credit_treinamento,y_credit_treinamento.ravel())
+
+previsoes = knn_credit.predict(X_credit_teste)
+
+previsoes
+
+accuracy_score(y_credit_teste, previsoes) #Aqui já padronizamos
+
+cm = ConfusionMatrix(knn_credit)
+cm.fit(X_credit_treinamento, y_credit_treinamento)
+cm.score(X_credit_teste, y_credit_teste)
+
+print(classification_report(y_credit_teste, previsoes))
+
+with open ('census.pkl', 'rb') as f :
+  X_census_treinamento,y_census_treinamento, X_census_teste, y_census_teste = pickle.load(f)
+
+
+knn_census = KNeighborsClassifier(n_neighbors=7, metric='minkowski', p =2)
+knn_census.fit(X_census_treinamento,y_census_treinamento.ravel())
+
+previsoes = knn_census.predict(X_census_teste)
+
+accuracy_score(y_census_teste, previsoes) #Aqui já padronizamos
+
+cm = ConfusionMatrix(knn_census)
+cm.fit(X_census_treinamento, y_census_treinamento)
+cm.score(X_census_teste, y_census_teste)
+
+print(classification_report(y_census_teste, previsoes))
