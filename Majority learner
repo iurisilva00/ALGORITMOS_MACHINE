@@ -1,0 +1,22 @@
+#Classificador Majority learner Ferramenta para termos uma base de qual algoritmo utilizar
+
+
+majority = Orange.classification.MajorityLearner() #Classifica o registro com base nos maiores atributos da base
+
+previsoes = Orange.evaluation.testing.TestOnTestData(base_credito,base_credito, [majority])
+
+Orange.evaluation.CA(previsoes)
+
+for registro in base_credito:
+  print(registro.get_class())
+
+from collections import Counter
+Counter(str(registro.get_class())for registro in base_credito)
+
+majority_census = Orange.classification.MajorityLearner()
+previsoes = Orange.evaluation.testing.TestOnTestData(base_census,base_census,[majority_census])
+Orange.evaluation.CA(previsoes)
+
+from collections import Counter
+Counter(str(registro.get_class())for registro in base_census)
+
